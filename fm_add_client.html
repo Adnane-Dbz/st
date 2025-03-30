@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body> 
+      
+    <form action="ajouter_client.php" method="POST">
+        <label for="nom"  > nom</label>  
+        <input type="text" id="nom" name="nom" required>
+    
+        <label for="prenom">prenom </label>
+        <input type="text" id="prenom" name="prenom" required>
+    
+        <label for="tel">tel b  </label>
+        <input type="text" id="tel" name="tel" required pattern="[0-9]{10}" title="Entrez un numéro de téléphone valide (10 chiffres)">
+
+        <label for="fax">fax :</label>
+        <input type="tel" id="fax" name="fax" required>
+    
+        <label for="siege">siege:</label>
+        <input type="text" id="siege" name="siege" required>
+    
+        <button type="submit">ajouter client  </button>
+    </form>
+    
+</body>
+</html>

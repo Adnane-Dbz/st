@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body> 
+      
+    <form action="ajouter_article.php" method="POST">
+        <label for="designation"  > designation</label>  
+        <input type="text" id="designation" name="designation" required>
+    
+        <label for="marque">marque </label>
+        <input type="text" id="marque" name="marque" required>
+    
+        <label for="grandeur">grandeur </label>
+        <input type="number" id="grandeur" name="grandeur" required>
+
+        <label for="qnt_actual">qnt_actual :</label>
+        <input type="number" id="qnt_actual" name="qnt_actual" required>
+    
+        <label for="qnt_seuil">qnt_seuil:</label>
+        <input type="number" id="qnt_seuil" name="qnt_seuil" required>
+    
+        <label for="reference">reference:</label>
+        <input type="text" id="reference" name="reference" required>
+    
+        <button type="submit">ajouter article </button>
+    </form>
+    
+</body>
+</html>
