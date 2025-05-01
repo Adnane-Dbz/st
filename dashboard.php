@@ -97,9 +97,13 @@ if (!isset($_SESSION['nom'])) {
 
         <div class="cards">
             <div class="card"><a href="art.html">Produits</a></div>
-            <div class="card"><a href="#">Catégories</a></div>
-            <div class="card"><a href="#">Utilisateurs</a></div>
-            <div class="card"><a href="#">Rapports</a></div>
+            <div class="card"><a href="art_category.html">Catégories</a></div>
+            <div class="card"><a href="art_user.html">Utilisateurs</a></div>
+            <div class="card"><a href="art_client.html">Clients</a></div>
+            <div class="card"><a href="art_factur_client.html">facteur_client</a></div>
+            <div class="card"><a href="art_fournisseur.html">Fournisseurs</a></div>
+            <div class="card"><a href="art_factur_fourn.html">facteur_client</a></div>
+            
         </div>
 
         <div class="logout">
