@@ -41,7 +41,24 @@
             padding: 15px 20px;
             color: rgba(255,255,255,0.8);
             text-decoration: none;
+            position: relative;
+            overflow: hidden;
             transition: all 0.3s;
+        }
+
+        .sidebar-menu a::after {
+            content: "";
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .sidebar-menu a:hover::after {
+            left: 0;
         }
 
         .sidebar-menu a:hover {
@@ -104,6 +121,7 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            transition: transform 0.2s, background 0.3s;
         }
 
         .btn-add {
@@ -115,6 +133,27 @@
             background: var(--accent);
             color: white;
         }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background: #1abc9c;
+        }
+
+        /* Animation d'apparition */
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-slide-in {
+            animation: fadeSlideIn 0.5s ease forwards;
+        }
     </style>
 </head>
 <body>
@@ -122,11 +161,11 @@
         <div class="sidebar-menu">
             <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <a href="art.html"><i class="fas fa-box"></i> Articles</a>
-            <a href="#"><i class="fas fa-users"></i> Clients</a>
+            <a href="art_client.html"><i class="fas fa-users"></i> Clients</a>
             <a href="#"><i class="fas fa-truck"></i> Fournisseurs</a>
             <a href="#"><i class="fas fa-sign-in-alt"></i> Entrées</a>
             <a href="#"><i class="fas fa-sign-out-alt"></i> Sorties</a>
-            <a href="#"><i class="fas fa-tags"></i> Catégories</a>
+            <a href="art_category.html"><i class="fas fa-tags"></i> Catégories</a>
             <a href="#"><i class="fas fa-cog"></i> Administration</a>
         </div>
     </div>
@@ -141,69 +180,56 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>id</th>
                             <th>Catégorie</th>
                             <th>Désignation</th>
                             <th>Marque</th>
                             <th>Quantité</th>
+                            <th>Quantité seuil</th>
                             <th>Référence</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Les données viendront ici dynamiquement -->
-                        <tr>
-                            <td>Informatique</td>
-                            <td>Clavier mécanique</td>
-                            <td>Logitech</td>
-                            <td>25</td>
-                            <td>LG-KB-001</td>
-                            <td>
-                                <a href="modifier_article.php?id=${article.id}" class="btn btn-add">Modifier</a>
- <a href="supprimer_article.php?id=${article.id}" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
-
-                            </td>
-                        </tr>
+                        <!-- Les données dynamiques viendront ici -->
                     </tbody>
                 </table>
                 <div class="buttons">
-
                     <a href="frm_ajouter_article.php" class="btn btn-add">Ajouter</a>
-                   
                 </div>
             </div>
         </div>
     </div>
+
     <script>
-   fetch('fetch_art.php')
-    .then(response => response.json())
-    .then(data => {
-        const tbody = document.querySelector('tbody');
-        tbody.innerHTML = ''; // Vider le contenu initial
+        fetch('fetch_art.php')
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector('tbody');
+                tbody.innerHTML = '';
 
-        data.forEach(article => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${article.id}</td>
-                <td>${article.categorie ?? "Sans catégorie"}</td>
-                <td>${article.designation}</td>
-                <td>${article.marque}</td>
-                <td>${article.qnt_actual}</td>
-                <td>${article.reference}</td>
-                <td>
-                    <a href="modifier_article.php?id=${article.id}" class="btn btn-add">Modifier</a>
-                    <a href="supprimer_article.php?id=${article.id}" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
-                </td>
-            `;
-            tbody.appendChild(row);
-        });
-    })
-    .catch(error => {
-        console.error("Erreur lors du chargement des articles:", error);
-    });
+                data.forEach((article, index) => {
+                    const row = document.createElement('tr');
+                    row.classList.add('fade-slide-in');
+                    row.style.animationDelay = `${index * 0.05}s`; // Décalage entre chaque ligne
 
-</script>
-
-    
+                    row.innerHTML = `
+                        <td>${article.categorie ?? "Sans catégorie"}</td>
+                        <td>${article.designation}</td>
+                        <td>${article.marque}</td>
+                        <td>${article.qnt_actual}</td>
+                        <td>${article.qnt_seuil}</td>
+                        <td>${article.reference}</td>
+                        <td>
+                            <a href="modifier_article.php?id=${article.id}" class="btn btn-add">Modifier</a>
+                            <a href="supprimer_article.php?id=${article.id}" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error("Erreur lors du chargement des articles:", error);
+            });
+    </script>
 </body>
 </html>

@@ -122,7 +122,7 @@
         <div class="sidebar-menu">
             <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <a href="art.html"><i class="fas fa-box"></i> Articles</a>
-            <a href="#"><i class="fas fa-users"></i> Clients</a>
+            <a href="art_client.html"><i class="fas fa-users"></i> Clients</a>
             <a href="#"><i class="fas fa-truck"></i> Fournisseurs</a>
             <a href="#"><i class="fas fa-sign-in-alt"></i> Entrées</a>
             <a href="#"><i class="fas fa-sign-out-alt"></i> Sorties</a>
@@ -142,6 +142,10 @@
                     <thead>
                         <tr>   
                             <th>Name</th>
+                            <th>Prenom</th>
+                            <th>Tel</th>
+                            <th>fax</th>
+                            <th>Seige</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -151,8 +155,8 @@
                             <td>Informatique</td>
                             
                             <td>
-                                <a href="modifier_article.php?id=${article.id}" class="btn btn-add">Modifier</a>
- <a href="supprimer_article.php?id=${article.id}" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
+                                <a href="modifier_client.php?id=${client.id}" class="btn btn-add">Modifier</a>
+ <a href="supprimer_client.php?id=${client.id}" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?');">Supprimer</a>
 
                             </td>
                         </tr>
@@ -160,29 +164,33 @@
                 </table>
                 <div class="buttons">
 
-                    <a href="frm_add_category.php" class="btn btn-add">Ajouter</a>
+                    <a href="frm_add_client.php" class="btn btn-add">Ajouter</a>
                    
                 </div>
             </div>
         </div>
     </div>
     <script>
-   fetch('fetch_cat.php')
+   fetch('fetch_client.php')
     .then(response => response.json())
     .then(data => {
         const tbody = document.querySelector('tbody');
         tbody.innerHTML = ''; // Vider le contenu initial
 
-        data.forEach(category => {
+        data.forEach(client => {
             const row = document.createElement('tr');
             row.innerHTML = `
                
                 
-                <td>${category.name_c}</td>
+                <td>${client.nom}</td>
+                <td>${client.prenom}</td>
+                <td>${client.tel}</td>
+                <td>${client.fax}</td>
+                <td>${client.siege}</td>
               
                 <td>
-                    <a href="modifier_category.php?id=${category.id}" class="btn btn-add">Modifier</a>
-                    <a href="supprimer_category.php?id=${category.id}" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
+                    <a href="modifier_client.php?id=${client.id}" class="btn btn-add">Modifier</a>
+                    <a href="supprimer_client.php?id=${client.id}" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">Supprimer</a>
                 </td>
             `;
             tbody.appendChild(row);

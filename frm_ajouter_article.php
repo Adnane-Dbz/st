@@ -122,11 +122,11 @@ try {
         <div class="sidebar-menu">
             <a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <a href="art.html"><i class="fas fa-box"></i> Articles</a>
-            <a href="#"><i class="fas fa-users"></i> Clients</a>
+            <a href="art_client.html"><i class="fas fa-users"></i> Clients</a>
             <a href="#"><i class="fas fa-truck"></i> Fournisseurs</a>
             <a href="#"><i class="fas fa-sign-in-alt"></i> Entrées</a>
             <a href="#"><i class="fas fa-sign-out-alt"></i> Sorties</a>
-            <a href="#"><i class="fas fa-tags"></i> Catégories</a>
+            <a href="art_category.html"><i class="fas fa-tags"></i> Catégories</a>
             <a href="#"><i class="fas fa-cog"></i> Administration</a>
         </div>
     </div>
