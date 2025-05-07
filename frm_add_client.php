@@ -137,11 +137,14 @@ try {
         </header>
         <div class="content">
             <div class="form-container">
-                <h2>Ajouter un category</h2>
-                <form action="ajouter_category.php" method="POST">
+                <h2>Ajouter un Client</h2>
+                <form action="ajouter_client.php" method="POST">
                    
-                    <label>Name category :</label><input type="text" name="name_c" required><br>
-                    
+                    <label>Nom  :</label><input type="text" name="nom" required><br>
+                    <label>Prenom :</label><input type="text" name="prenom" required><br>
+                    <label>Tel :</label><input type="tel" name="tel" required><br>
+                    <label>Fax:</label><input type="text" name="fax" required><br>
+                    <label>Siege :</label><input type="text" name="siege" required><br>
                     <button type="submit">Ajouter</button>
                 </form>
             </div>

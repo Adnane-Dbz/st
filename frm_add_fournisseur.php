@@ -3,7 +3,7 @@ try {
     $pdo = new PDO("mysql:host=localhost;port=3307;dbname=stock_db", "root", "1234");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $categories = $pdo->query("SELECT * FROM category")->fetchAll(PDO::FETCH_ASSOC);
+    $categories = $pdo->query("SELECT * FROM fournisseur")->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
 }
@@ -137,11 +137,14 @@ try {
         </header>
         <div class="content">
             <div class="form-container">
-                <h2>Ajouter un category</h2>
-                <form action="ajouter_category.php" method="POST">
+                <h2>Ajouter un fournisseur</h2>
+                <form action="ajouter_fournisseur.php" method="POST">
                    
-                    <label>Name category :</label><input type="text" name="name_c" required><br>
-                    
+                    <label>Nom  :</label><input type="text" name="nom" required><br>
+                    <label>Prenom :</label><input type="text" name="prenom" required><br>
+                    <label>Tel :</label><input type="tel" name="tel" required><br>
+                    <label>Fax:</label><input type="text" name="fax" required><br>
+                    <label>Siege :</label><input type="text" name="siege" required><br>
                     <button type="submit">Ajouter</button>
                 </form>
             </div>
