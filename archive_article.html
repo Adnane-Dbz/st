@@ -98,19 +98,13 @@
                 <table id="logTable">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Désignation</th>
-                            <th>Action</th>
-                            <th>Ancienne valeur</th>
-                            <th>Nouvelle valeur</th>
-                            <th>Date</th>
-                            <th>Marque</th>
-                            <th>Grandeur</th>
-                            <th>Quantité</th>
-                            <th>Seuil</th>
-                            <th>Référence</th>
-                            <th>Catégorie</th>
-                            <th>Heure Action</th>
+                          
+                                <th>Désignation</th>
+                                <th>Champ modifié</th>
+                                <th>Ancienne valeur</th>
+                                <th>Type d'opération</th>
+                                <th>Date et heure</th>
+                          
                         </tr>
                     </thead>
                     <tbody>
@@ -122,34 +116,37 @@
     </div>
 
     <script>
-    fetch('fetch_archive_article.php')
-        .then(res => res.json())
-        .then(data => {
-            const tbody = document.querySelector('#logTable tbody');
-            tbody.innerHTML = '';
-            data.forEach(log => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${log.log_id}</td>
-                    <td>${log.designation}</td>
-                    <td>${log.action_type}</td>
-                    <td>${log.old_value}</td>
-                    <td>${log.new_value}</td>
-                    <td>${log.date_modif}</td>
-                    <td>${log.marque}</td>
-                    <td>${log.grandeur}</td>
-                    <td>${log.qnt_actual}</td>
-                    <td>${log.qnt_seuil}</td>
-                    <td>${log.reference}</td>
-                    <td>${log.category_name}</td>
-                    <td>${log.action_time}</td>
-                `;
-                tbody.appendChild(row);
-            });
-        })
-        .catch(error => {
-            console.error("Erreur :", error);
-        });
-    </script>
+fetch('fetch_archive_article.php')
+  .then(response => response.json())
+  .then(data => {
+    const tbody = document.querySelector('#logTable tbody');
+    tbody.innerHTML = '';
+
+    if (data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5">Aucun historique trouvé.</td></tr>';
+      return;
+    }
+
+    data.forEach(log => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${log.designation ?? '-'}</td>
+        <td>${log.champ_modifie ?? '-'}</td>
+        <td><pre>${log.ancienne_valeur ?? '-'}</pre></td>
+        <td>${log.operation_type ?? '-'}</td>
+       
+        <td>${log.operation_timestamp ?? '-'}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  })
+  .catch(error => {
+    console.error("Erreur lors de la récupération des logs :", error);
+    const tbody = document.querySelector('#logTable tbody');
+    tbody.innerHTML = '<tr><td colspan="5">Erreur lors de la récupération des données.</td></tr>';
+  });
+
+    
+        </script>
 </body>
 </html>
