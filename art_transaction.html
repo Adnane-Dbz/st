@@ -137,16 +137,17 @@
             <div class="table-container">
                 <h2>Historique des Transactions</h2>
                 <table>
-                    <thead>
-                        <tr>
-              
-                            <th>Article</th>
-                            <th>Type</th>
-                            <th>Quantité</th>
-                            <th>Date</th>
-                            <th>Utilisateur</th>
-                        </tr>
-                    </thead>
+                   <thead>
+    <tr>
+        <th>Article</th>
+        <th>Type</th>
+        <th>Quantité</th>
+        <th>Date</th>
+        <th>Utilisateur</th>
+        <th>Client/Fournisseur</th>
+    </tr>
+</thead>
+
                     <tbody>
                         <!-- Contenu dynamique ici -->
                     </tbody>
@@ -169,12 +170,12 @@ fetch('fetch_transactions.php')
         data.forEach(tr => {
             const row = document.createElement('tr');
             row.innerHTML = `
-
                 <td>${tr.article_nom}</td>
                 <td>${tr.type_transaction}</td>
                 <td>${tr.quantite}</td>
                 <td>${new Date(tr.created_at).toLocaleString('fr-FR')}</td>
                 <td>${tr.user_prenom} ${tr.user_nom}</td>
+                <td>${tr.personne}</td>
             `;
             tbody.appendChild(row);
         });
@@ -182,6 +183,7 @@ fetch('fetch_transactions.php')
     .catch(error => {
         console.error("Erreur lors du chargement des transactions:", error);
     });
+
 
 </script>
 

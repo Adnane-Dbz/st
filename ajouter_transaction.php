@@ -4,6 +4,8 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $articles = $pdo->query("SELECT * FROM article")->fetchAll(PDO::FETCH_ASSOC);
+    $clients = $pdo->query("SELECT * FROM client")->fetchAll(PDO::FETCH_ASSOC);
+    $fournisseurs = $pdo->query("SELECT * FROM fournisseur")->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
     exit;
@@ -17,7 +19,6 @@ try {
     <title>Ajouter une Transaction</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* نفس الستايل الذي قدمته */
         :root {
             --primary: #2c3e50;
             --secondary: #3498db;
@@ -60,7 +61,7 @@ try {
         <div class="content">
             <div class="form-container">
                 <h2>Ajouter une transaction</h2>
-                <form action="traitement_transaction.php" method="POST">
+                <form action="traitement_transaction.php" method="POST" onsubmit="return validateForm()">
                     <label>Article :</label>
                     <select name="article_id" required>
                         <option value="">-- Choisir un article --</option>
@@ -70,7 +71,8 @@ try {
                     </select>
 
                     <label>Type :</label>
-                    <select name="type_transaction" required>
+                    <select name="type_transaction" id="type_transaction" required onchange="toggleSelects()">
+                        <option value="">-- Choisir un type --</option>
                         <option value="entrée">Entrée</option>
                         <option value="sortie">Sortie</option>
                     </select>
@@ -78,12 +80,69 @@ try {
                     <label>Quantité :</label>
                     <input type="number" name="quantite" required min="1">
 
-                    
+                    <!-- Fournisseur -->
+                    <div id="fournisseur_section" style="display: none;">
+                        <label>Fournisseur :</label>
+                        <select name="fournisseur_id" id="fournisseur_id">
+                            <option value="">-- Choisir un fournisseur --</option>
+                            <?php foreach($fournisseurs as $f): ?>
+                                <option value="<?= $f['id'] ?>"><?= htmlspecialchars($f['nom']) ?> (<?= $f['prenom'] ?>)</option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <!-- Client -->
+                    <div id="client_section" style="display: none;">
+                        <label>Client :</label>
+                        <select name="client_id" id="client_id">
+                            <option value="">-- Choisir un client --</option>
+                            <?php foreach($clients as $c): ?>
+                                <option value="<?= $c['id'] ?>"><?= htmlspecialchars($c['nom']) ?> (<?= $c['prenom'] ?>)</option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
                     <button type="submit">Valider</button>
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleSelects() {
+            const type = document.getElementById('type_transaction').value;
+            const fournisseurSection = document.getElementById('fournisseur_section');
+            const clientSection = document.getElementById('client_section');
+
+            if (type === 'entrée') {
+                fournisseurSection.style.display = 'block';
+                clientSection.style.display = 'none';
+            } else if (type === 'sortie') {
+                fournisseurSection.style.display = 'none';
+                clientSection.style.display = 'block';
+            } else {
+                fournisseurSection.style.display = 'none';
+                clientSection.style.display = 'none';
+            }
+        }
+
+        function validateForm() {
+            const type = document.getElementById('type_transaction').value;
+            const fournisseur = document.getElementById('fournisseur_id').value;
+            const client = document.getElementById('client_id').value;
+
+            if (type === 'entrée' && fournisseur === "") {
+                alert("Veuillez choisir un fournisseur.");
+                return false;
+            }
+
+            if (type === 'sortie' && client === "") {
+                alert("Veuillez choisir un client.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 </html>
